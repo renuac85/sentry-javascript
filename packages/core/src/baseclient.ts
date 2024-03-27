@@ -210,6 +210,8 @@ export abstract class BaseClient<O extends ClientOptions> implements Client<O> {
 
     const sdkProcessingMetadata = event.sdkProcessingMetadata || {};
     const capturedSpanScope: Scope | undefined = sdkProcessingMetadata.capturedSpanScope;
+    // Remove this from sdkProcessingMetadata as it's no longer needed
+    delete sdkProcessingMetadata.capturedSpanScope;
 
     this._process(
       this._captureEvent(event, hint, capturedSpanScope || scope).then(result => {
@@ -716,6 +718,8 @@ export abstract class BaseClient<O extends ClientOptions> implements Client<O> {
 
     const sdkProcessingMetadata = event.sdkProcessingMetadata || {};
     const capturedSpanIsolationScope: Scope | undefined = sdkProcessingMetadata.capturedSpanIsolationScope;
+    // Remove this from sdkProcessingMetadata as it's no longer needed
+    delete sdkProcessingMetadata.capturedSpanIsolationScope;
 
     return this._prepareEvent(event, hint, scope, capturedSpanIsolationScope)
       .then(prepared => {
