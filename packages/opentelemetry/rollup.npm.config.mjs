@@ -9,7 +9,7 @@ export default makeNPMConfigVariants(
         // set preserveModules to false because we want to bundle everything into one file.
         preserveModules:
           process.env.SENTRY_BUILD_PRESERVE_MODULES === undefined
-            ? false
+            ? true
             : Boolean(process.env.SENTRY_BUILD_PRESERVE_MODULES),
       },
     },
