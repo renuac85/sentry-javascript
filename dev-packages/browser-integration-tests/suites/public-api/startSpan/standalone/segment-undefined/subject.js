@@ -1,1 +1,1 @@
-Sentry.startSpan({ name: 'standalone_segment_span', experimental: { standalone: true } }, () => {});
+Sentry.startSpan({ name: 'standalone_span', experimental: { standalone: true } }, () => {});

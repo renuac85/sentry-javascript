@@ -16,14 +16,22 @@ sentryTest('sends a span envelope with is_segment: false', async ({ getLocalTest
   const url = await getLocalTestPath({ testDir: __dirname });
   const spanEnvelope = await getFirstSentryEnvelopeRequest<SpanEnvelope>(page, url, properFullEnvelopeRequestParser);
 
-  const headers = spanEnvelope[0];
+  const envelopeHeaders = spanEnvelope[0];
   const item = spanEnvelope[1][0];
 
   const itemHeader = item[0];
   const spanJson = item[1];
 
-  expect(headers).toEqual({
+  expect(envelopeHeaders).toEqual({
     sent_at: expect.any(String),
+    trace: {
+      environment: 'production',
+      public_key: 'public',
+      sample_rate: '1',
+      sampled: 'true',
+      trace_id: spanJson.trace_id,
+      transaction: 'standalone_none_segment_span',
+    },
   });
 
   expect(itemHeader).toEqual({
@@ -36,7 +44,7 @@ sentryTest('sends a span envelope with is_segment: false', async ({ getLocalTest
       'sentry.sample_rate': 1,
       'sentry.source': 'custom',
     },
-    description: 'standalone_segment_span',
+    description: 'standalone_none_segment_span',
     origin: 'manual',
     span_id: expect.stringMatching(/^[0-9a-f]{16}$/),
     start_timestamp: expect.any(Number),
