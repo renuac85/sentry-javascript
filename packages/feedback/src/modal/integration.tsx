@@ -1,5 +1,11 @@
 import { getCurrentScope } from '@sentry/core';
-import type { CreateDialogProps, FeedbackFormData, FeedbackModalIntegration, IntegrationFn } from '@sentry/types';
+import type {
+  CreateDialogProps,
+  FeedbackDialog,
+  FeedbackFormData,
+  FeedbackModalIntegration,
+  IntegrationFn,
+} from '@sentry/types';
 import { h, render } from 'preact';
 import { DOCUMENT } from '../constants';
 import { createDialogStyles } from './components/Dialog.css';
@@ -19,7 +25,7 @@ export const feedbackModalIntegration = ((): FeedbackModalIntegration => {
       const el = DOCUMENT.createElement('div');
       const style = createDialogStyles();
 
-      const dialog = {
+      const dialog: FeedbackDialog = {
         get el() {
           return el;
         },
